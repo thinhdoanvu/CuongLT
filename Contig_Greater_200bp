@@ -1,0 +1,47 @@
+#Xu ly file fasta cho ong Cuong
+Du lieu cua ong Cuong duoc opy tu Windows nen co dang nhu sau:
+>NODE_241_length_5130_cov_41.956059^M$
+gacgccgcggccacccactcacctgaacacgagtgtcgttgcagtactagggggcggggt^$M
+cgaagggtgcggcgaggaccgcatcccgctgcttggccagtagttcacgccgccgggtca^$M
+
+#Can phai dinh dang sang chuan Linux
+dos2linux.sh N_seriolae_KH_21.fasta
+>NODE_241_length_5130_cov_41.956059
+gacgccgcggccacccactcacctgaacacgagtgtcgttgcagtactagggggcggggt
+cgaagggtgcggcgaggaccgcatcccgctgcttggccagtagttcacgccgccgggtca
+
+
+#Tao ra file tinh so dong cua file Fasta
+linenumbers=$(wc -l N_seriolae_KH_21.fasta | sed 's/  / /g' | sed 's/ /\t/g' | cut -f1)
+seq 1 $linenumbers >number
+paste number N_seriolae_KH_21.fasta >N_seriolae_KH_21_number
+
+1	>NODE_241_length_5130_cov_41.956059
+2	gacgccgcggccacccactcacctgaacacgagtgtcgttgcagtactagggggcggggt
+3	cgaagggtgcggcgaggaccgcatcccgctgcttggccagtagttcacgccgccgggtca
+
+#Moi trinh tu se tao ra 1 file .fasta
+#File Excel chua lenh can lam
+ 
+nano makepartfile.sh
+#copy lenh Ecel bo vo
+chmod 755 makepartfile.sh
+./makepartfile.sh
+
+#Xoa cac file co length <200
+#liet ke cac file partname
+ls *part >partfilename
+t=$(cat partfilename)
+mkdir delete
+for i in $t; do grep ">" $i | sed 's/_/\t/g' | awk -v filename=$i '$5 <200 {print "mv "filename" delete"}' >>removepartfile.sh; done
+
+chmod 755 removepartfile.sh
+./removepartfile.sh
+
+ #Xu ly trong thu muc save
+cd save
+t=$(ls *part)
+for i in $t
+do
+cat $i | cut -f2 >>part.merge
+done
