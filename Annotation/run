@@ -1,0 +1,96 @@
+mv EM150506_Korea_RAST.csv Korea.csv
+ls *csv | awk '{print "mv "}' >t0
+ls *csv >t1
+ls *csv | sed 's/ /_/g' | awk '{print substr($0,index($0,".")-5,9)}' >t2
+paste t0 t1 t2 >rename.sh
+
+#rename.sh format:
+mv 	Korea.csv	Korea.csv
+mv Nocardia\ seriolae\ KH_11.csv KH_11.csv
+mv Nocardia\ seriolae\ KH_21.csv KH_21.csv
+mv Nocardia\ seriolae\ NT_50.csv NT_50.csv
+mv Nocardia\ seriolae\ PY_31.csv PY_31.csv
+mv Nocardia\ seriolae\ PY_37.csv PY_37.csv
+mv Nocardia\ seriolae\ VT_45.csv VT_45.csv
+mv Nocardia\ seriolae\ VT_62.csv VT_62.csv
+
+chmod 755 rename.sh
+./rename.sh
+
+
+#Step 2. tao cac function files
+
+ls *csv | awk '{print substr($0,1,5)}'>namelist.txt
+
+k=$(cat ../keyword.txt)
+n=$(cat namelist.txt)
+
+if( find *.function &>/dev/null );then
+  echo "Da ton tai cac file nay, ban co muon xoa hay khong?(y/n)"
+  read ans
+  if( ans=="y" || ans == "Y" );then
+  rm *function
+  fi
+fi
+
+for i in $k
+do
+for j in $n
+do
+cut -f1-12 $j.csv | grep -i $i >> $i.$j.function
+done
+done
+
+#Step 3. Noi tat cac cac keyword cua cac file function lam 1
+
+mkdir ../functionFiles
+mv *function ../functionFiles/
+cd ../functionFiles
+
+for i in $k
+do
+cut -f12 $i.*.function | sort | uniq >> $i.dna
+done
+
+
+#So sanh cac DNA trong tung keyword function voi function cua tung ca the
+ls *function | awk '{print substr($0,index($0,".")+1,length($0))}' | awk '{print substr($0,1,index($0,".")-1)}' | sort -u >filename
+
+n=$(cat filename)
+
+for i in $k
+do
+dna=$(cat $i.dna)
+for j in $dna
+do
+for z in $n
+do
+if grep -q -w $j $i.$z.function 
+then 
+echo -e $j"\t"$z >> $i.all
+else
+echo -e $j"\tx" >> $i.all
+fi
+done
+done
+done
+
+#Gop cac ket qua theo tung keyword
+k=$(ls *all | awk '{print substr($0,1,index($0,".")-1)}')
+for i in $k
+do
+dna=$(cut -f1 $i.all | sort -d | uniq)
+for j in $dna
+do
+grep -w $j $i.all | cut -f1 | sort -d | uniq >t1
+grep -w $j $i.all | cut -f2 | tr '\n' '\t' >t2
+paste t1 t2 >> $i.result
+done
+done
+rm t1
+rm t2
+#cat keyword.txt | parallel -j 2 -delay 1
+
+
+
+
