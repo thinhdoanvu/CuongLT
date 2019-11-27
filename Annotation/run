@@ -91,6 +91,31 @@ rm t1
 rm t2
 #cat keyword.txt | parallel -j 2 -delay 1
 
+#Lam them cho ong Cuong
 
+k=$(cat ../keyword.txt)
+for i in $k
+do
+cat $i.*.function >> $i.all.gen
+done
 
+for i in $k
+do
+cut -f8,12 $i.all.gen >> $i.dna.gen
+done
 
+for i in $k
+do
+cut -f1 $i.result >dna.list
+d=$(cat dna.list)
+for j in $d
+do
+grep -w $j $i.dna.gen | cut -f1 | sort -d | uniq >> $i.each
+done
+done
+rm dna.list
+
+for i in $k
+do
+paste $i.each $i.result > $i.namegene
+done
