@@ -1,0 +1,93 @@
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+FILE GENE_FULLLIST
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+Thay the cac ky tu:
+ Space => _
+ [ => . hay _. la dau [
+ ] => . hay ._ la dau ]
+ / => ~
+ 
+sed 's/ /_/g' Gene_fullname.list | tr '[' '.' | tr ']' '.' | tr '/' '~' >tam_gene_fullname
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Tao ra cac folder la cac GENE
+genelist=$(cat tam_gene_fullname)
+for i in $genelist; do mkdir FULLNAME/$i; done
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+FILE *func
+Thay the cac ky tu:
+ Space => _
+ [ => . hay _. la dau [
+ ] => . hay ._ la dau ]
+ / => ~
+ 
+ls *txt >tam_txt
+filelist=$(cat tam_txt | sed 's/.txt//g')
+for i in $filelist
+do
+sed 's/ /_/g' TXT/$i.txt | tr '[' '.' | tr ']' '.' | tr '/' '~' >$i.func
+done
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Tim danh sach cac Gene trong tung tap tin va luu file vao thu muc gene
+for i in $genelist
+do
+for j in $filelist
+do
+grep -F $i $j.func >FULLNAME/$i/$j.res
+done
+done
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Thong ke so luong gene tim thay trong moi Sample
+cd FULLNAME
+for i in $genelist
+do
+wc -l $i/*res | awk '{print $1}' | tr '\n' '\t' | awk -v x=$i '{print x"\t"$0}' >> ../total_gene_fullname_count
+done
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+FILE GENE_ABB
+$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+Thay the cac ky tu:
+ Space => _
+ [ => . hay _. la dau [
+ ] => . hay ._ la dau ]
+ / => ~
+ 
+sed 's/ /_/g' Gene_abbname.list | tr '[' '.' | tr ']' '.' | tr '/' '~' >tam_gene_abbname
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Tao ra cac folder la cac GENE
+genelist=$(cat tam_gene_abbname)
+for i in $genelist; do mkdir ABBNAME/$i; done
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+FILE *func
+KHONG CAN LAM NUA DO O TRUOC DA LAM
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Tim danh sach cac Gene trong tung tap tin va luu file vao thu muc gene
+for i in $genelist
+do
+for j in $filelist
+do
+grep -F $i $j.func >ABBNAME/$i/$j.res
+done
+done
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Thong ke so luong gene tim thay trong moi Sample
+cd ABBNAME
+for i in $genelist
+do
+wc -l $i/*res | awk '{print $1}' | tr '\n' '\t' | awk -v x=$i '{print x"\t"$0}' >> ../total_gene_abbname_count
+done
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
