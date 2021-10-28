@@ -22,7 +22,10 @@ Thay the cac ky tu:
  ] => . hay ._ la dau ]
  / => ~
  
-ls *txt >tam_txt
+cd TXT
+ls *txt >../tam_txt
+cd ..
+
 filelist=$(cat tam_txt | sed 's/.txt//g')
 for i in $filelist
 do
@@ -78,7 +81,7 @@ for i in $genelist
 do
 for j in $filelist
 do
-grep -F $i $j.func >ABBNAME/$i/$j.res
+grep -i $i $j.func >ABBNAME/$i/$j.res
 done
 done
 
@@ -89,5 +92,9 @@ for i in $genelist
 do
 wc -l $i/*res | awk '{print $1}' | tr '\n' '\t' | awk -v x=$i '{print x"\t"$0}' >> ../total_gene_abbname_count
 done
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
