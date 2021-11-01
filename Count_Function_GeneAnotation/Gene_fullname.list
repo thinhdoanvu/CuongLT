@@ -48,7 +48,7 @@ LSU ribosomal protein L35p
 Magnesium and cobalt efflux protein CorC
 MbtH-like NRPS chaperone
 MCE-family lipoprotein MceE
-MCE-family protein Mce1D 
+MCE-family protein Mce1D
 MCE-family protein Mce1F
 MCE-family protein MceA
 MCE-family protein MceB
@@ -60,7 +60,7 @@ Metal-dependent hydrolases of the beta-lactamase superfamily III
 Methylcrotonyl-CoA carboxylase carboxyl transferase subunit (EC 6.4.1.4)
 Multicopper oxidase
 Multidrug resistance protein ErmB
-NAD(P)H oxidoreductase YRKL (EC 1.6.99.-) Putative NADPH-quinone reductase (modulator of drug activity B)  Flavodoxin 2
+NAD(P)H oxidoreductase YRKL (EC 1.6.99.-) @ Putative NADPH-quinone reductase (modulator of drug activity B) @ Flavodoxin 2
 NADP-dependent glyceraldehyde-3-phosphate dehydrogenase (EC 1.2.1.13)
 NTP pyrophosphohydrolases including oxidative damage repair enzymes
 O-antigen export system, ATP-binding protein
@@ -98,4 +98,3 @@ Two component transcriptional regulatory protein DevR
 UDP-glucose 6-dehydrogenase (EC 1.1.1.22)
 Uncharacterized protein MSMEG_5081
 Urease alpha subunit (EC 3.5.1.5)
-
