@@ -12,7 +12,7 @@ sed 's/ /_/g' Gene_fullname.list | tr '[' '.' | tr ']' '.' | tr '/' '~' >tam_gen
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 Tao ra cac folder la cac GENE
 genelist=$(cat tam_gene_fullname)
-for i in $genelist; do mkdir FULLNAME/$i; done
+for i in $genelist; do mkdir FULLNAME_UPDATE/$i; done
 
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 FILE *func
@@ -38,16 +38,16 @@ for i in $genelist
 do
 for j in $filelist
 do
-grep -F $i $j.func >FULLNAME/$i/$j.res
+grep -i $i $j.func >FULLNAME_UPDATE/$i/$j.res
 done
 done
 
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 Thong ke so luong gene tim thay trong moi Sample
-cd FULLNAME
+cd FULLNAME_UPDATE
 for i in $genelist
 do
-wc -l $i/*res | awk '{print $1}' | tr '\n' '\t' | awk -v x=$i '{print x"\t"$0}' >> ../total_gene_fullname_count
+wc -l $i/*res | awk '{print $1}' | tr '\n' '\t' | awk -v x=$i '{print x"\t"$0}' >> ../total_gene_fullname_update2_count
 done
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
@@ -92,9 +92,4 @@ for i in $genelist
 do
 wc -l $i/*res | awk '{print $1}' | tr '\n' '\t' | awk -v x=$i '{print x"\t"$0}' >> ../total_gene_abbname_count
 done
-++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
